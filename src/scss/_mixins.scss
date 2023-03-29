@@ -1,0 +1,36 @@
+@mixin button($color: green){
+	border: none;
+	border-radius: 3px;
+	background: none;
+	padding: 4px;
+
+	display: inline-block;
+
+	text-align: center;
+	vertical-align: middle;
+
+	transition: background-color .3s linear,
+				color .3s linear;
+
+	&:hover{
+		background: #eee;
+		cursor: pointer;
+	}
+
+	&:active, &.active{
+		color: $color;
+	}
+
+	& span{
+		font-size: 28px;
+	}
+}
+
+@mixin position($top, $height){
+	position: fixed;
+	top: $top;
+	left: 0;
+
+	width: 100%;
+	height: $height;
+}
