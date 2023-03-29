@@ -1,0 +1,44 @@
+
+.formula {
+	width: 100%;
+	height: $formula-height;
+
+	position: fixed;
+	top: calc($header-height + $toolbar-height);
+	left: 0;
+
+	display: flex;
+	align-items: center;
+
+	border-bottom: 1px solid $border-color;
+}
+
+.formula__icon{
+	min-width: $cell-width;
+
+	color: #888;
+	font-size: 20px;
+	font-style: italic;
+
+	text-align: center;
+}
+
+.formula__input{
+	flex-grow: 1;
+	font-size: 18px;
+
+	border-left: 1px solid $border-color;
+
+	input{
+		border: none;
+		padding: 0 15px;
+		
+		height: 100%;
+		width: 100%;
+		
+
+		&:focus{
+			outline: none;
+		}
+	}
+}

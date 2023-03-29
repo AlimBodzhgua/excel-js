@@ -1,0 +1,35 @@
+
+.toolbar{
+	background-color: rgb(249,251,253);
+	width: 100%;
+	height: $toolbar-height;
+
+	position: fixed;
+	top: $header-height;
+	left: 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border-top: 2px solid $border-color;
+	border-bottom: 2px solid $border-color;
+}
+
+.toolbar__inner{
+	background-color: rgb(237,242,250);
+	border-radius: 30px;
+
+	margin: 0px 25px;
+
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.btn {
+		@include button(green);
+	}
+}

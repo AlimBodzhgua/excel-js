@@ -1,0 +1,49 @@
+
+
+.header{
+	@include position(0, $header-height);
+
+	background-color: #dfdfdf;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+
+	.btn {
+		@include button(green);
+	}
+
+}
+
+
+.header__input{
+
+	& input{
+		margin: 0;
+		padding: 2px 7px;
+
+		color: #000;
+		font-size: 18px;
+		line-height: 22px;
+
+		border: 2px solid transparent;
+		border-radius: 2px;
+
+		transition: border-color .3s ease-out;
+
+
+		&:hover{
+			border: 2px solid $border-color;
+		}
+
+		&:focus{
+			border: 2px solid #1a73e8;
+			outline: none;
+		}
+	}
+}
+
+.header__actions{
+
+}
