@@ -45,6 +45,9 @@ module.exports = {
 		port: 4000,
 		hot: isDev,
 		allowedHosts: 'all',
+		client: {
+      		reconnect: 3,
+    	},
 	},
 	plugins: [
 		new CleanWebpackPlugin(),

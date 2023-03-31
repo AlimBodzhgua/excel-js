@@ -11,9 +11,12 @@
 		"comma-dangle": "off",
 		"require-jsdoc": "off",
 		"linebreak-style": "off",
-		"quotes": [2, "single"]
-
-
+		"eol-last": ["error", "never"],
+		"indent": 0,
+		"no-tabs": 0,
+		'no-trailing-spaces': 0,
+		'operator-linebreak': 'off',
+		'spaced-comment': 'off',
 	},
 	"extends": ["eslint:recommended", "google"],
 }
