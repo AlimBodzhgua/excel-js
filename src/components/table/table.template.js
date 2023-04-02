@@ -8,22 +8,32 @@ function toChar(el, index) {
 }
 
 
-function createCell() {
+function createCell(_, column) {
 	return `
-		<div class="cell" contenteditable></div>
+		<div class="cell" data-col="${column}" contenteditable></div>
 	`;
 }
 
-function createCol(value) {
+function createCol(value, index) {
 	return `
-		<div class="column">${value}</div>
+		<div class="column" data-type='resizable' data-col="${index}">
+			${value}
+			<div class="column-resize" data-resize="column"></div>
+		</div>
+
 	`;
 }
 
 function createRow(number, content) {
+	const resize = number 
+		? '<div class="row-resize" data-resize="row"></div>' 
+		: '';
 	return `
-		<div class="row">
-			<div class="row__info">${number ? number: ''}</div>
+		<div class="row" data-type='resizable'>
+			<div class="row__info">
+				${number ? number: ''}
+				${resize}
+			</div>
 			<div class="row__data">${content}</div>
 		</div>
 	`;
