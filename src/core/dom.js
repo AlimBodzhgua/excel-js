@@ -38,6 +38,42 @@ class Dom {
 	off(eventType, callback) {
 		this.$element.removeEventListener(eventType, callback);
 	}
+
+	closest(selector) {
+		return $(this.$element.closest(selector));
+	}
+
+	getCoords() {
+		return this.$element.getBoundingClientRect();
+	}
+
+	getLastChild() {
+		return $(this.$element.lastElementChild);
+	}
+
+	getFirstChild() {
+		return $(this.$element.firstElementChild);
+	}
+
+	findAll(selector) {
+		return this.$element.querySelectorAll(selector);
+	}
+
+	get data() {
+		return this.$element.dataset
+	}
+
+	css(styles = {}) {
+		Object.keys(styles).forEach(key => {
+			this.$element.style[key] = styles[key];
+		})
+	}
+
+	/*get css() {
+		Object.keys(styles).forEach(key => {
+			return console.log(`${this.$element.style[key]}`);
+		})	
+	}*/
 }
 
 export function $(selector) {
