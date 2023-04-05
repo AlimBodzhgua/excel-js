@@ -12,8 +12,3 @@ const excel = new Excel('#app', {components:
 });
 
 excel.render();
-
-
-/*setTimeout(function() {
-    excel.preventRender()
-}, 10000);*/

@@ -8,10 +8,19 @@ function toChar(el, index) {
 }
 
 
-function createCell(_, column) {
-	return `
-		<div class="cell" data-col="${column}" contenteditable></div>
-	`;
+function createCell(row) {
+	return function(_, column) {
+		return `
+			<div 
+				class="cell" 
+				contenteditable 
+				data-col="${column}" 
+				data-id="${row}:${column}"
+				data-type="cell"
+			>
+			</div>
+		`;
+	}
 }
 
 function createCol(value, index) {
@@ -49,15 +58,15 @@ export function createTable(rowsCount = 20) {
 		.map(createCol)
 		.join('');
 
-	const cels = new Array(colsCount)
-			.fill('')
-			.map(createCell)
-			.join('');
 
 	rows.push(createRow(null, cols));
 	
-	for (let i = 1; i <= rowsCount; i++) {
-		rows.push(createRow(i, cels));
+	for (let row = 0; row < rowsCount; row++) {
+		const cels = new Array(colsCount)
+				.fill('')
+				.map(createCell(row))
+				.join('');
+		rows.push(createRow(row + 1, cels));
 	}
 
 	return rows.join('');
