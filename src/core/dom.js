@@ -13,6 +13,26 @@ class Dom {
 		return this.$element.outerHTML.trim();
 	}
 
+	text(text) {
+		if (typeof text === 'string') {
+			this.$element.textContent = text;
+			return this;
+		}
+		/*if (this.$element.tagName.toLowerCase() === 'input') {
+			return this.$element.value.trim();
+		}*/
+		return this.$element.textContent.trim();
+	}
+
+	inputValue(text) {
+		if (typeof text === 'string') {
+			this.$element.value = text;
+			return this;
+		}
+		return this.$element.value.trim();
+	}
+
+
 	clear() {
 		this.html('');
 		return this;
@@ -47,20 +67,33 @@ class Dom {
 		return this.$element.getBoundingClientRect();
 	}
 
-	getLastChild() {
-		return $(this.$element.lastElementChild);
-	}
-
-	getFirstChild() {
-		return $(this.$element.firstElementChild);
+	find(selector) {
+		return $(this.$element.querySelector(selector));
 	}
 
 	findAll(selector) {
 		return this.$element.querySelectorAll(selector);
 	}
 
+	countAll(element) {
+		return this.$element.findAll(element).length - 1;
+	}
+
+	addClass(className) {
+		return this.$element.classList.add(className);
+	}
+
+	removeClass(className) {
+		return this.$element.classList.remove(className);
+	}
+
 	get data() {
 		return this.$element.dataset
+	}
+
+	focus() {
+		this.$element.focus();
+		return this;
 	}
 
 	css(styles = {}) {
@@ -68,12 +101,6 @@ class Dom {
 			this.$element.style[key] = styles[key];
 		})
 	}
-
-	/*get css() {
-		Object.keys(styles).forEach(key => {
-			return console.log(`${this.$element.style[key]}`);
-		})	
-	}*/
 }
 
 export function $(selector) {
