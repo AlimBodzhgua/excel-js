@@ -1,5 +1,4 @@
 
-
 export class Emitter {
 	constructor() {
 		this.listeners = {};
@@ -31,9 +30,4 @@ export class Emitter {
 				this.listeners[event].filter(listener => listener !== fn)
 		}
 	}
-
-	/*Отписываемся от уведомлений*/
-	/*unsubscribe(event, fn) {
-		this.listeners[event] = this.listeners[event].filter(listener !== fn)
-	} */
 }

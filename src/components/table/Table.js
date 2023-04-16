@@ -6,9 +6,11 @@ import {createTable} from '@/components/table/table.template';
 import {resizeHandler} from '@/components/table/table.resize';
 import {ExcelComponent} from '@core/ExcelComponent';
 import {TableSelection} from '@core/TableSelection';
+import {defaultStyles} from '@/constants';
 import {parseId} from '@core/utils';
+import {parse} from '@core/parse';
 import {$} from '@core/dom';
-
+import * as actions from '@/redux/actions';
 
 export class Table extends ExcelComponent {
 	static className = 'table';
@@ -22,7 +24,7 @@ export class Table extends ExcelComponent {
 	}
 
 	toHTML() {
-		return createTable();
+		return createTable(20, this.store.getState());
 	}
 
 	prepare() {
@@ -35,22 +37,44 @@ export class Table extends ExcelComponent {
 		const $cell = this.$root.find('[data-id="0:0"]')
 		this.selectCell($cell);
 
-		this.$on('formula:input', text => {
-			this.selection.current.text(text);
+		this.$on('formula:input', value => {
+			this.selection.current.attr('data-value', value);
+			this.selection.current.text(parse(value));
+			this.updateTextInStore(value);
 		})
+		
 		this.$on('formula:enter', () => {
 			this.selection.current.focus();
+		})
+
+		this.$on('toolbar:applyStyle', value => {
+			this.selection.applyStyle(value);
+			this.$dispatch(actions.applyStyle({
+				value,
+				ids: this.selection.selectedIds,
+			}))
 		})
 	}
 
 	selectCell($cell) {
 		this.selection.select($cell);
 		this.$emit('table:select', $cell);
+		const styles = $cell.getStyles(Object.keys(defaultStyles));
+		this.$dispatch(actions.changeStyles(styles));
+	}
+
+	async resizeTable(event) {
+		try {
+			const data = await resizeHandler(this.$root, event)
+			this.$dispatch(actions.tableResize(data));
+		} catch (e) {
+			console.warn('Resize error', e.message);
+		}
 	}
 
 	onMousedown(event) {
 		if (shouldResize(event)) {
-			resizeHandler(this.$root, event);
+			this.resizeTable(event);
 		} else if (isCell(event)) {
 			const $cell = $(event.target);
 			if (event.ctrlKey) {
@@ -60,10 +84,10 @@ export class Table extends ExcelComponent {
 				const currentId = parseId(this.selection.current.data.id);
 				
 				const ids = matrix(targetId, currentId);
-				const $cells = ids.map(id => this.$root.find(`[data-id="${id}"]`))
+				const $cells = ids.map(id => this.$root.find(`[data-id="${id}"]`));
 				this.selection.selectRange($cells);
 			} else {
-				this.selection.select($cell);
+				this.selectCell($cell);
 			}
 		}
 	}
@@ -89,7 +113,14 @@ export class Table extends ExcelComponent {
 		}
 	}
 
+	updateTextInStore(value) {
+		this.$dispatch(actions.textChange({
+			id: this.selection.current.data.id,
+			value,
+		}))
+	}
+
 	onInput(event) {
-		this.$emit('table:input', $(event.target))
+		this.updateTextInStore($(event.target).text());
 	}
 }

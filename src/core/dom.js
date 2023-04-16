@@ -14,13 +14,13 @@ class Dom {
 	}
 
 	text(text) {
-		if (typeof text === 'string') {
+		if (typeof text !== 'undefined') {
 			this.$element.textContent = text;
 			return this;
 		}
-		/*if (this.$element.tagName.toLowerCase() === 'input') {
+		if (this.$element.tagName.toLowerCase() === 'input') {
 			return this.$element.value.trim();
-		}*/
+		}
 		return this.$element.textContent.trim();
 	}
 
@@ -91,6 +91,14 @@ class Dom {
 		return this.$element.dataset
 	}
 
+	attr(name, value) {
+		if (value) {
+			this.$element.setAttribute(name, value);
+			return;
+		}
+		return this.$element.getAttribute(name);
+	}
+
 	focus() {
 		this.$element.focus();
 		return this;
@@ -100,6 +108,13 @@ class Dom {
 		Object.keys(styles).forEach(key => {
 			this.$element.style[key] = styles[key];
 		})
+	}
+
+	getStyles(styles = []) {
+		return styles.reduce((res, s) => {
+			res[s] = this.$element.style[s];
+			return res;
+		}, {})
 	}
 }
 
