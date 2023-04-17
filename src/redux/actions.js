@@ -4,6 +4,7 @@ import {
 	TEXT_CHANGE,
 	CHANGE_STYLES,
 	APPLY_STYLE,
+	UPDATE_DATE,
 } from './types';
 
 //Action creator
@@ -40,5 +41,11 @@ export function changeTitle(data) {
 	return {
 		type: CHANGE_TITLE,
 		data,
+	}
+}
+
+export function updateDate(data) {
+	return {
+		type: UPDATE_DATE,
 	}
 }
