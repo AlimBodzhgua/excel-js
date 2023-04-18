@@ -6,9 +6,9 @@ import {Header} from '@/components/header/Header';
 import {Excel} from '@/components/excel/Excel';
 import {Table} from '@/components/table/Table';
 import {rootReducer} from '@/redux/rootReducer';
-import {createStore} from '@core/createStore';
+import {createStore} from '@core/store/createStore';
 import {storage, debounce} from '@core/utils';
-import {Page} from '@core/routes/Page';
+import {Page} from '@core/Page';
 
 export class ExcelPage extends Page {
 	getRoot() {
